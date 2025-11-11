@@ -16,6 +16,7 @@ A Streamlit-based dashboard for analyzing YouTube video performance and predicti
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR-USERNAME/video-analytics-dashboard.git
+   git clone https://github.com/abouzihay2008/video-analytics-dashboard.git
 
    cd video-analytics-dashboard
+
