@@ -1,0 +1,9 @@
+streamlit
+scikit-learn
+pandas
+numpy
+matplotlib
+plotly
+opencv-python
+pillow
+protobuf==6.32.1
