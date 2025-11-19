@@ -10,7 +10,7 @@ A Streamlit-based dashboard for analyzing YouTube video performance and predicti
 - **Real-time Insights** - Live data analysis and metrics
 - ## References
 - **Data Science Portfolio Project From Scratch | Building a YouTube Data Dashboard with Streamlit by Keen Jee published 3 years ago
-- ** For help used used [DeepSeek](https://www.deepseek.com) AI models.
+- ** For help used [DeepSeek](https://www.deepseek.com) AI models.
 
 ## 🛠️ Installation
 
@@ -19,4 +19,5 @@ A Streamlit-based dashboard for analyzing YouTube video performance and predicti
    git clone https://github.com/abouzihay2008/video-analytics-dashboard.git
 
    cd video-analytics-dashboard
+
 
