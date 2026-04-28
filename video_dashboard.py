@@ -115,7 +115,8 @@ numeric_cols = df_agg_diff.select_dtypes(include=['int64', 'float64']).columns
 median_agg = df_agg_diff[df_agg_diff['Video publish time'] >=
                          metric_date_12mo][numeric_cols].median(numeric_only=True)
 
-df_agg_diff.loc[:, numeric_cols]=(df_agg_diff.loc[:, numeric_cols]- median_agg).div(median_agg)
+df_agg_diff.loc[:, numeric_cols] = (df_agg_diff.loc[:, numeric_cols] - median_agg) / median_agg
+df_agg_diff.loc[:, numeric_cols] = df_agg_diff.loc[:, numeric_cols].fillna(0).replace([float('inf'), -float('inf')], 0)
 # build dashboard
 add_side_barr =st.sidebar.selectbox('Aggregate or Individual Video',
                              ('Aggregate metrics', 'Video Performance prediction', 
