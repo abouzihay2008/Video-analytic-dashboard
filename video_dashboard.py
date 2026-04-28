@@ -115,7 +115,31 @@ numeric_cols = df_agg_diff.select_dtypes(include=['int64', 'float64']).columns
 median_agg = df_agg_diff[df_agg_diff['Video publish time'] >=
                          metric_date_12mo][numeric_cols].median(numeric_only=True)
 
-df_agg_diff.loc[:, numeric_cols] = (df_agg_diff.loc[:, numeric_cols] - median_agg) / median_agg
+# COMPLETE FIX FOR LINE 118
+# Calculate percent change safely without causing dtype errors
+temp_result = pd.DataFrame(index=df_agg_diff.index)
+for col in numeric_cols:
+    if col in df_agg_diff.columns:
+        # Get median value (handle if median_agg is scalar or Series)
+        if hasattr(median_agg, 'loc') and col in median_agg.index:
+            med_val = median_agg.loc[col]
+        elif hasattr(median_agg, 'iloc'):
+            med_val = median_agg.iloc[0] if len(median_agg) > 0 else 1
+        else:
+            med_val = median_agg if not isinstance(median_agg, pd.Series) else 1
+        
+        # Prevent division by zero
+        if med_val == 0 or pd.isna(med_val):
+            med_val = 1
+        
+        # Calculate percent change
+        temp_result[col] = (df_agg_diff[col] - med_val) / med_val
+        
+        # Clean up infinite and NaN values
+        temp_result[col] = temp_result[col].fillna(0).replace([float('inf'), -float('inf')], 0)
+
+# Assign back to original dataframe
+df_agg_diff[numeric_cols] = temp_result[numeric_cols].values
 df_agg_diff.loc[:, numeric_cols] = df_agg_diff.loc[:, numeric_cols].fillna(0).replace([float('inf'), -float('inf')], 0)
 # build dashboard
 add_side_barr =st.sidebar.selectbox('Aggregate or Individual Video',
